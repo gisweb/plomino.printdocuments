@@ -1,0 +1,30 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="plomino.printdocuments">
+
+  <includeDependencies package="." />
+
+  <i18n:registerTranslations directory="locales" />
+
+  <include package=".browser" />
+
+
+  <genericsetup:registerProfile
+      name="default"
+      title="plomino.printdocuments"
+      directory="profiles/default"
+      description="Installs the plomino.printdocuments add-on."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:importStep
+      name="plomino.printdocuments-postInstall"
+      title="plomino.printdocuments post_install import step"
+      description="Post install import step from plomino.printdocuments"
+      handler=".setuphandlers.post_install">
+  </genericsetup:importStep>
+
+</configure>
