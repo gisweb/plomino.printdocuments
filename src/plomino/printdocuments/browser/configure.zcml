@@ -17,4 +17,39 @@
       directory="static"
       />
 
+  <browser:page
+      for="Products.CMFPlomino.interfaces.IPlominoDocument"
+      name="serializedoc"
+      class=".views.printService"
+      attribute="serializeDocument"
+      permission="zope2.View"
+      layer="plomino.printdocuments.interfaces.IPlominoPrintdocumentsLayer"
+    />
+  <browser:page
+      for="Products.CMFPlomino.interfaces.IPlominoDocument"
+      name="printdoc"
+      class=".views.printService"
+      attribute="printDocument"
+      permission="zope2.View"
+      layer="plomino.printdocuments.interfaces.IPlominoPrintdocumentsLayer"
+    />
+
+  <browser:page
+      for="Products.CMFPlomino.interfaces.IPlominoDocument"
+      name="docx2pdf"
+      class=".views.printService"
+      attribute="docx2pdf"
+      permission="zope2.View"
+      layer="plomino.printdocuments.interfaces.IPlominoPrintdocumentsLayer"
+    />
+
+  <browser:page
+      for="Products.CMFPlomino.interfaces.IPlominoDocument"
+      name="form2pdf"
+      class=".views.printService"
+      attribute="form2Pdf"
+      permission="zope2.View"
+      layer="plomino.printdocuments.interfaces.IPlominoPrintdocumentsLayer"
+    />
+
 </configure>
