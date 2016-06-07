@@ -266,15 +266,23 @@ def serialDoc(doc, formid='', field_list=[], field_remove=[], render=True, follo
             grid_form = db.getForm(field.getSettings().associated_form)
             grid_field_names = field.getSettings().field_mapping.split(',')
             rows=list()
+            dd = {}
             for row in itemvalue:
-                rows.append(dict([(k, renderSimpleItem(doc,v, grid_form.getFormField(k),render=render)) for k,v in zip(grid_field_names, row)]))
+                #rows.append(dict([(k, renderSimpleItem(doc,v, grid_form.getFormField(k),render=render)) for k,v in zip(grid_field_names, row)]))
+                for k,v in zip(grid_field_names, row):
+                    grid_field = grid_form.getFormField(k)
+                    grid_fieldtype = grid_field.getFieldType()
+                    dd[k] = renderSimpleItem(doc,v, grid_field, render=render)
+                    if render and grid_fieldtype == 'SELECTION':
+                        dd[k + '_key'] = renderSimpleItem(doc,v, grid_field, render=False)
+                rows.append(dd)
             res.append((itemname, rows))
 
         else:
             res.append((itemname, renderSimpleItem(doc,itemvalue,field,render=render)))
             #se restituisco i valori renderizzazi restituisco anche le chiavi
             if render and fieldtype == 'SELECTION':
-                res.append((itemname + '_keys', renderSimpleItem(doc,itemvalue,field,render=False)))
+                res.append((itemname + '_key', renderSimpleItem(doc,itemvalue,field,render=False)))
 
 
     return dict(res)
