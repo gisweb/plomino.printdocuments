@@ -66,10 +66,11 @@ class printService(BrowserView):
     def printDocument(self): 
         """
         GENERAZIONE DI UN DOCX PARTENDO DA UN MODELLO DI STAMPA 
-        <docurl>/@@printdoc?model=relazione_asseverata_scia&grp=relazioni&form=scia-completa&field=campo&pdf=1&jsondump=1
+        <docurl>/@@printdoc?app=praticaweb&model=relazione_asseverata_scia&grp=relazioni&form=scia-completa&field=campo&pdf=1&jsondump=1
         PARAMETRI DI REQUEST
         model:modello di stampa da usare
         grp:sottocartella del modello di stampa
+        app:applicazione
         form:(consigliato)form da usare per serializzare il documento se non viene passato usa il form del plomino document
         field:(facoltativo) se viene passato setta l'item sul plomino document
         pdf:(facoltativo) se vine passato cre anche il file pdf
@@ -80,8 +81,9 @@ class printService(BrowserView):
         if not self.print_form:
             self.print_form = self.doc.Form
 
-        grp = request.get('grp')
-        model = request.get('model')
+        app = request.get('app')  #praticaweb, dehors, trasporti..
+        grp = request.get('grp')  #autorizzazione....
+        model = request.get('model')  #nome del modello
 
         redirect_url = ''
         fieldsubset = '' 
@@ -103,10 +105,7 @@ class printService(BrowserView):
         if not "models_folder" in self.printConfig:
             self.result['msg'] = "models_folder non assegnato"
             return self.render()
-        models = self.printConfig['models_folder']
-
-        #nome della app
-        app = self.doc.getItem('iol_app','praticaweb-1')        
+        models = self.printConfig['models_folder']    
 
         portal = self.doc.portal_url.getPortalObject()
         if not models in portal.keys():
