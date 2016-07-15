@@ -201,7 +201,7 @@ class printService(BrowserView):
         if res['success'] == 1:
             if "content" in res:
                 content = base64.b64decode(res['content'])
-            if "pdfContent" in wsres:
+            if "pdfContent" in res:
                 pdfContent = base64.b64decode(res['pdfContent'])   
 
             return self.renderContent(modelName,content,modelMimeType,pdfContent)
