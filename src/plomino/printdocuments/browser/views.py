@@ -5,6 +5,8 @@ from zope.interface import implements
 from zope.component import getMultiAdapter
 from Acquisition import aq_inner
 from ..serialdoc import serialDoc,serialItem,serializeGrid,convertToPdf,is_json,getServiceConfiguration
+from plone.app.contenttypes.interfaces import IFile
+
 
 from plomino.printdocuments import _
 
@@ -76,7 +78,6 @@ class printService(BrowserView):
         pdf:(facoltativo) se vine passato cre anche il file pdf
         jsondump:(per debug) esce restituendo il documento serializzato
         """  
-
         request = self.request
         if not self.print_form:
             self.print_form = self.doc.Form
@@ -157,12 +158,17 @@ class printService(BrowserView):
 
         #Stampa da modello
         modelFile = modelsFolder[model]
-        modelContent = base64.b64encode(modelFile.get_data())
-
-        #estensione dei file per stampe
-        modelName = modelFile.getFilename()
-        modelMimeType = modelFile.getContentType()
-        modelIcon = modelFile.getIcon()
+        
+        if IFile.providedBy(modelFile):
+            modelContent = base64.b64encode(modelFile.file.data)
+            modelName = modelFile.file.filename
+            modelMimeType = modelFile.file.contentType
+        else:
+            modelContent = base64.b64encode(modelFile.get_data())
+            #estensione dei file per stampe
+            modelName = modelFile.getFilename()
+            modelMimeType = modelFile.getContentType()
+            modelIcon = modelFile.getIcon()
 
         #Parametri della chiamata al servizio di creazione
         data = dict(
