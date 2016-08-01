@@ -137,7 +137,7 @@ def renderSimpleItem(doc, itemvalue, field, render=True):
 
     db = doc.getParentDatabase()
     renderedValue = None
-    
+
     # if I need data representation (or metadata) for printing porposes
     try:
         fieldtype = field.getFieldType()
@@ -247,11 +247,15 @@ def serialDoc(doc, formid='', field_list=[], field_remove=[], render=True, follo
 
     if field_remove:
         fieldlist = [i for i in fieldlist if i not in field_remove]
+    
 
     #check field from item if not return data type
     for itemname in fieldlist:
+
         field = form.getFormField(itemname)
-        itemvalue = doc.getItem(itemname)
+        adapt = field.getSettings()
+        itemvalue = adapt.getFieldValue(form, doc, False)
+
         if field:
             fieldtype = field.getFieldType()
         else:
