@@ -253,8 +253,7 @@ def serialDoc(doc, formid='', field_list=[], field_remove=[], render=True, follo
     for itemname in fieldlist:
 
         field = form.getFormField(itemname)
-        adapt = field.getSettings()
-        itemvalue = adapt.getFieldValue(form, doc, False)
+        itemvalue = doc.getItem(itemname)
 
         if field:
             fieldtype = field.getFieldType()
@@ -287,6 +286,8 @@ def serialDoc(doc, formid='', field_list=[], field_remove=[], render=True, follo
             boh=1
 
         else:
+            adapt = field.getSettings()
+            itemvalue = adapt.getFieldValue(form, doc, False)
             res.append((itemname, renderSimpleItem(doc,itemvalue,field,render=render)))
             #se restituisco i valori renderizzazi restituisco anche le chiavi
             if render and fieldtype == 'SELECTION':
