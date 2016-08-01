@@ -269,9 +269,9 @@ def serialDoc(doc, formid='', field_list=[], field_remove=[], render=True, follo
             grid_form = db.getForm(field.getSettings().associated_form)
             grid_field_names = field.getSettings().field_mapping.split(',')
             rows=list()
-            dd = {}
             for row in itemvalue:
                 #rows.append(dict([(k, renderSimpleItem(doc,v, grid_form.getFormField(k),render=render)) for k,v in zip(grid_field_names, row)]))
+                dd = {}
                 for k,v in zip(grid_field_names, row):
                     grid_field = grid_form.getFormField(k)
                     grid_fieldtype = grid_field.getFieldType()
