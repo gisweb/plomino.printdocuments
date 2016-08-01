@@ -282,6 +282,10 @@ def serialDoc(doc, formid='', field_list=[], field_remove=[], render=True, follo
                 rows.append(dd)
             res.append((itemname, rows))
 
+        elif fieldtype in ['ATTACHMENT','UPLOAD']:
+            #DA VEDERE CHE FARE
+            boh=1
+
         else:
             res.append((itemname, renderSimpleItem(doc,itemvalue,field,render=render)))
             #se restituisco i valori renderizzazi restituisco anche le chiavi
