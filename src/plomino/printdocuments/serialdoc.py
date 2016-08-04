@@ -181,8 +181,8 @@ def renderSimpleItem(doc, itemvalue, field, render=True):
         if not itemvalue:
             renderedValue = ''
         elif fieldtype == 'TEXT':
-            renderedValue = safe_unicode(str(itemvalue)).encode('utf-8').decode('ascii', 'ignore')
-            #renderedValue = itemvalue.encode('utf-8')
+            #renderedValue = safe_unicode(str(itemvalue)).encode('utf-8').decode('ascii', 'ignore')
+            renderedValue = itemvalue
         elif fieldtype == 'NUMBER':
             if render:
                 custom_format = None if not field else field.getSettings('format')
