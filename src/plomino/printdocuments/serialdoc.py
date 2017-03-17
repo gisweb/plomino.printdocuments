@@ -274,10 +274,13 @@ def serialDoc(doc, formid='', field_list=[], field_remove=[], render=True, follo
                 dd = {}
                 for k,v in zip(grid_field_names, row):
                     grid_field = grid_form.getFormField(k)
-                    grid_fieldtype = grid_field.getFieldType()
-                    dd[k] = renderSimpleItem(doc,v, grid_field, render=render)
-                    if render and grid_fieldtype == 'SELECTION':
-                        dd[k + '_key'] = renderSimpleItem(doc,v, grid_field, render=False)
+                    try:
+                        grid_fieldtype = grid_field.getFieldType()
+                        dd[k] = renderSimpleItem(doc,v, grid_field, render=render)
+                        if render and grid_fieldtype == 'SELECTION':
+                            dd[k + '_key'] = renderSimpleItem(doc,v, grid_field, render=False)
+                    except:
+                        dd[k] = ""
                 rows.append(dd)
             res.append((itemname, rows))
 
