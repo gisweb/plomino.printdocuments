@@ -280,6 +280,10 @@ def serialDoc(doc, formid='', field_list=[], field_remove=[], render=True, follo
                         if render and grid_fieldtype == 'SELECTION':
                             dd[k + '_key'] = renderSimpleItem(doc,v, grid_field, render=False)
                     except:
+                        error = "Manca il campo %s nella form %s" %(k, grid_form.id)
+                        serialError = doc.getItem('serial_error',[])
+                        serialError.append(error)
+                        doc.setItem('serial_error',serialError)
                         dd[k] = ""
                 rows.append(dd)
             res.append((itemname, rows))
